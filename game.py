@@ -1,6 +1,7 @@
 import pygame
 import time
 import random
+
 pygame.font.init()
 
 WIDTH, HEIGHT = 1000, 800
@@ -10,8 +11,10 @@ pygame.display.set_caption('Kyle Saves The Day!')
 BG = pygame.image.load('/Users/kamerritt/Desktop/game/game_background.jpg')
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
+#PLAYER_IMAGE = pygame.image.load('firefighter_transparent.png').convert_alpha()
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
+#PLAYER_RECT = PLAYER_IMAGE.get_rect(center=())
 
 PLAYER_VEL = 5
 

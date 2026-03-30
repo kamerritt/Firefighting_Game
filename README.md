@@ -1,2 +1,2 @@
 # Firefighting_Game
-This simple video game was adapted from a Tech With Tim tutorial. The user is tasked with putting out fires within several buildings. The game ends when all the fires are put out, or when the fire extent becomes too large for the user to contain. 
+This simple video game was adapted from a Tech With Tim tutorial (https://www.youtube.com/watch?v=waY3LfJhQLY). The user plays as a firefighter who is tasked with putting out fires within several buildings that spawn at random. The number of fires and rate of spread is determined by the user's selection of difficulty level (Easy, Medium, or Hard). The game ends when all the fires are put out, or when the fire extent becomes too large for the user to contain. 

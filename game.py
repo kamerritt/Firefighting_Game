@@ -15,6 +15,9 @@ PLAYER_HEIGHT = 60
 
 PLAYER_VEL = 5
 
+FIRE_WIDTH = 10
+FIRE_HEIGHT = 20
+
 FONT = pygame.font.SysFont('comicsans', 30)
 
 def draw(player, time_elapsed):
@@ -35,10 +38,24 @@ def main():
     clock = pygame.time.Clock()
     starttime = time.time()
     time_elapsed = 0
+    
+    fire_add_increment = 2000
+    fire_count = 0
+
+    fires = []
 
     while run:
-        clock.tick(60)
+        fire_count == clock.tick(60)
         time_elapsed = time.time() - starttime
+
+        if fire_count > fire_add_increment:
+            for i in range(3):
+                fire_x = random.randint(0, WIDTH - FIRE_WIDTH)
+                fire = pygame.Rect(fire_x, -FIRE_HEIGHT, FIRE_WIDTH, FIRE_HEIGHT)
+                fires.append(fire)
+
+                fire_add_increment = max(200, fire_add_increment - 50)
+                fire_count = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

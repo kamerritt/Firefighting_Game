@@ -17,16 +17,20 @@ PLAYER_VEL = 5
 
 FIRE_WIDTH = 10
 FIRE_HEIGHT = 20
+FIRE_VEL = 3
 
 FONT = pygame.font.SysFont('comicsans', 30)
 
-def draw(player, time_elapsed):
+def draw(player, time_elapsed, fires):
     WIN.blit(BG, (0, 0))
 
     time_text = FONT.render(f'Time: {round(time_elapsed)}s', 1, 'white')
     WIN.blit(time_text, (10, 10))
 
     pygame.draw.rect(WIN, 'green', player)
+
+    for fire in fires:
+        pygame.draw.rect(WIN, 'red', fire)
 
     pygame.display.update() 
 
@@ -43,9 +47,10 @@ def main():
     fire_count = 0
 
     fires = []
+    hit = False
 
     while run:
-        fire_count == clock.tick(60)
+        fire_count += clock.tick(60)
         time_elapsed = time.time() - starttime
 
         if fire_count > fire_add_increment:
@@ -67,9 +72,18 @@ def main():
             player.x -= PLAYER_VEL
 
         elif keys[pygame.K_RIGHT] and player.x + PLAYER_VEL  +player.width <= WIDTH:
-            player.x += PLAYER_VEL      
+            player.x += PLAYER_VEL   
 
-        draw(player, time_elapsed)
+        for fire in fires[:]:
+            fire.y += FIRE_VEL
+            if fire.y > HEIGHT:
+                fires.remove(fire)
+            elif fire.y + fire.height >= player.y and fire.colliderect(player):
+                fires.remove(fire)  
+                hit = True
+                break
+
+        draw(player, time_elapsed, fires)
 
     pygame.quit
 

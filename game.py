@@ -11,9 +11,10 @@ pygame.display.set_caption('Kyle Saves The Day!')
 BG = pygame.image.load('/Users/kamerritt/Desktop/game/game_background.jpg')
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
-#PLAYER_IMAGE = pygame.image.load('firefighter_transparent.png').convert_alpha()
-PLAYER_WIDTH = 40
-PLAYER_HEIGHT = 60
+PLAYER_IMAGE = pygame.image.load('/Users/kamerritt/Desktop/game/firefighter_transparent.png').convert_alpha()
+PLAYER_WIDTH = 100
+PLAYER_HEIGHT = 100
+PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
 #PLAYER_RECT = PLAYER_IMAGE.get_rect(center=())
 
 PLAYER_VEL = 5
@@ -30,7 +31,7 @@ def draw(player, time_elapsed, fires):
     time_text = FONT.render(f'Time: {round(time_elapsed)}s', 1, 'white')
     WIN.blit(time_text, (10, 10))
 
-    pygame.draw.rect(WIN, 'green', player)
+    WIN.blit(PLAYER_IMAGE, (player.x, player.y))
 
     for fire in fires:
         pygame.draw.rect(WIN, 'red', fire)
@@ -40,7 +41,10 @@ def draw(player, time_elapsed, fires):
 def main():
     run = True
 
-    player = pygame.Rect(200, (HEIGHT - PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT)
+    #player = pygame.Rect(200, (HEIGHT - PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT)
+    player = PLAYER_IMAGE.get_rect()
+    player.x = 200
+    player.bottom = HEIGHT
 
     clock = pygame.time.Clock()
     starttime = time.time()
@@ -95,7 +99,7 @@ def main():
 
         draw(player, time_elapsed, fires)
 
-    pygame.quit
+    pygame.quit()
 
 
 if __name__ == "__main__":

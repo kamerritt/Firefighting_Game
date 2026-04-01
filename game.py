@@ -3,7 +3,9 @@ import pygame
 import time
 import random
 
-pygame.font.init() # Initialize font
+# Initialize game and font
+pygame.init()
+pygame.font.init()
 
 # Set gameplay window parameters and caption
 WIDTH, HEIGHT = 1000, 800
@@ -11,22 +13,22 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Kyle Saves The Day!')
 
 # Load and scale background
-BG = pygame.image.load('game_images/game_background.jpg')
-BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
+BG = pygame.transform.scale(pygame.image.load('game_images/game_background.jpg'), (WIDTH, HEIGHT))
+#BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
-# Load and scale player avatar; set player velocity
-PLAYER_IMAGE = pygame.image.load('game_images/firefighter_transparent.png').convert_alpha()
+# Set player velocity; load and scale avatar image
 PLAYER_WIDTH = 100
 PLAYER_HEIGHT = 100
 PLAYER_VEL = 5
-PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
+PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/firefighter_transparent.png').convert_alpha(), (PLAYER_WIDTH, PLAYER_HEIGHT))
+#PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
-#Load and scale fires; set fire spawn rate
-FIRE_IMAGE = pygame.image.load('game_images/flame_transparent.png').convert_alpha()
+# Set fire spawn rate; load and scale fire image
 FIRE_WIDTH = 30
 FIRE_HEIGHT = 45
 FIRE_VEL = 3
-FIRE_IMAGE = pygame.transform.scale(FIRE_IMAGE, (FIRE_WIDTH, FIRE_HEIGHT))
+FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/flame_transparent.png').convert_alpha(), (FIRE_WIDTH, FIRE_HEIGHT))
+#FIRE_IMAGE = pygame.transform.scale(FIRE_IMAGE, (FIRE_WIDTH, FIRE_HEIGHT))
 
 FONT = pygame.font.SysFont('comicsans', 30) # Set font type
 

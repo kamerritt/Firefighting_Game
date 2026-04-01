@@ -15,7 +15,7 @@ pygame.display.set_caption('Kyle Saves The Day!')
 # Load and scale background, avatar, and fire images
 BG = pygame.transform.scale(pygame.image.load('game_images/game_background.jpg'), (WIDTH, HEIGHT))
 PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/firefighter_transparent.png').convert_alpha(), (100, 100))
-FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/flame_transparent.png').convert_alpha(), (FIRE_WIDTH, FIRE_HEIGHT))
+FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/flame_transparent.png').convert_alpha(), (30, 45))
 
 FONT = pygame.font.SysFont('comicsans', 30) # Set font type
 
@@ -114,14 +114,14 @@ class Play:
         pygame.display.update()
         pygame.time.delay(4000)
 
-    
-    def run_game(self):
+    # Main function to run game
+    def main(self):
         while self.run:
             self.fire_count += self.clock.tick(60) # Increase fire count every second of gameplay
 
             # Spawn fires on screen until game ends
             if self.fire_count > self.fire_add_increment:
-                self.spawn.fires()
+                self.spawn_fires()
             
             # End game if user clicks to exit screen
             for event in pygame.event.get():
@@ -130,7 +130,7 @@ class Play:
 
             # Allow avatar movement
             keys = pygame.key.get_pressed()
-            self.player.move(keys)
+            self.avatar.move(keys)
 
             self.fire_location() # Handle fires
 
@@ -146,4 +146,5 @@ class Play:
 
 # Run game!
 if __name__ == "__main__":
-    main()
+    play = Play()
+    play.main()

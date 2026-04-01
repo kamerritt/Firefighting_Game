@@ -56,7 +56,57 @@ class Fire(Game):
         return self.rect.y > HEIGHT # Fire moves off screen 
     
     def hit(self, avatar):
-        return self.rect.colliderect(avatar.rect)
+        return self.rect.colliderect(avatar.rect) # Handle collison of avatar with fire
+    
+class Play:
+    def __init__(self):
+        self.avatar = Avatar()
+        self.fires = [] # Start off with zero fires
+
+        self.clock = pygame.time.Clock() # Gameplay clock
+        self.starttime = time.time()
+
+        self.fire_add_increment = 2000 # Add fire every 2 seconds
+        self.fire_count = 0
+
+        self.run = True
+        self.hit = False
+        
+    def spawn_fires(self):
+        for i in range(3):
+            self.fires.append(Fire()) # Add fire to list
+        
+        self.fire_add_increment = max(200, self.fire_add_increment-50)
+        self.fire_count = 0
+    
+    def fire_location(self):
+        for fire in self.fires[:]:
+            fire.move()
+
+            if fire.off_screen():
+                self.fires.remove(fire) # Remove fire from gameplay if off screen
+            
+            elif fire.hit(self.avatar):
+                self.fires.remove(fire)
+                self.hit = True # Change condition to reflect that the avatar has been hit
+    
+    # Draw objects on gameplay screen
+    def draw(self):
+        WIN.blit(BG, (0, 0)) # Draw background
+
+        time_elapsed = time.time() - self.starttime
+        time_text = FONT.render(f'Time: {round(time_elapsed)}s', 1, 'white')
+        WIN.blit(time_text, (10, 10)) # Draw gameplay clock in upper left corner
+
+        self.avatar.draw(WIN) # Draw avatar on screen
+
+        for fire in self.fires:
+            fire.draw(WIN) # Draw fires on screen
+        
+        pygame.display.update()
+        
+
+
 
 
         

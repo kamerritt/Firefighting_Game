@@ -8,10 +8,10 @@ WIDTH, HEIGHT = 1000, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Kyle Saves The Day!')
 
-BG = pygame.image.load('/Users/kamerritt/Desktop/game/game_background.jpg')
+BG = pygame.image.load('game_images/game_background.jpg')
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
-PLAYER_IMAGE = pygame.image.load('/Users/kamerritt/Desktop/game/firefighter_transparent.png').convert_alpha()
+PLAYER_IMAGE = pygame.image.load('game_images/firefighter_transparent.png').convert_alpha()
 PLAYER_WIDTH = 100
 PLAYER_HEIGHT = 100
 PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))

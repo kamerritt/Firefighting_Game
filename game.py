@@ -1,59 +1,64 @@
+# Import packages
 import pygame
 import time
 import random
 
-pygame.font.init()
+pygame.font.init() # Initialize font
 
+# Set gameplay window parameters and caption
 WIDTH, HEIGHT = 1000, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Kyle Saves The Day!')
 
+# Load and scale background
 BG = pygame.image.load('game_images/game_background.jpg')
 BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
 
+# Load and scale player avatar; set player velocity
 PLAYER_IMAGE = pygame.image.load('game_images/firefighter_transparent.png').convert_alpha()
 PLAYER_WIDTH = 100
 PLAYER_HEIGHT = 100
-PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
-#PLAYER_RECT = PLAYER_IMAGE.get_rect(center=())
-
 PLAYER_VEL = 5
+PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
+#Load and scale fires; set fire spawn rate
 FIRE_IMAGE = pygame.image.load('game_images/flame_transparent.png').convert_alpha()
 FIRE_WIDTH = 30
 FIRE_HEIGHT = 45
 FIRE_VEL = 3
 FIRE_IMAGE = pygame.transform.scale(FIRE_IMAGE, (FIRE_WIDTH, FIRE_HEIGHT))
 
-FONT = pygame.font.SysFont('comicsans', 30)
+FONT = pygame.font.SysFont('comicsans', 30) # Set font type
 
+# Function to draw items on gameplay screen 
 def draw(player, time_elapsed, fires):
     WIN.blit(BG, (0, 0))
 
-    time_text = FONT.render(f'Time: {round(time_elapsed)}s', 1, 'white')
+    time_text = FONT.render(f'Time: {round(time_elapsed)}s', 1, 'white') # Create gameplay clock
     WIN.blit(time_text, (10, 10))
 
-    WIN.blit(PLAYER_IMAGE, (player.x, player.y))
+    WIN.blit(PLAYER_IMAGE, (player.x, player.y)) # Draw avatar on screen
 
     for fire in fires:
-        WIN.blit(FIRE_IMAGE, (fire.x, fire.y))
+        WIN.blit(FIRE_IMAGE, (fire.x, fire.y)) # Draw fire
 
     pygame.display.update() 
 
 def main():
-    run = True
+    run = True 
 
-    #player = pygame.Rect(200, (HEIGHT - PLAYER_HEIGHT), PLAYER_WIDTH, PLAYER_HEIGHT)
+    # Place avatar on bottom of gameplay screen 
     player = PLAYER_IMAGE.get_rect()
     player.x = 200
     player.bottom = HEIGHT
 
+    # Increase time on gameplay clock as long as run = True
     clock = pygame.time.Clock()
     starttime = time.time()
     time_elapsed = 0
     
-    fire_add_increment = 2000
-    fire_count = 0
+    fire_add_increment = 2000 # Spawn new fires every 2000 milliseconds
+    fire_count = 0 # Start game with zero fires
 
     fires = []
     hit = False
@@ -66,22 +71,22 @@ def main():
             for i in range(3):
                 fire_x = random.randint(0, WIDTH - FIRE_WIDTH)
                 fire = pygame.Rect(fire_x, -FIRE_HEIGHT, FIRE_WIDTH, FIRE_HEIGHT)
-                fires.append(fire)
+                fires.append(fire) # Add fires to a random location on screen
 
                 fire_add_increment = max(200, fire_add_increment - 50)
                 fire_count = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                run = False # Allow user to exit game
                 break
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and player.x - PLAYER_VEL >= 0:
-            player.x -= PLAYER_VEL
+            player.x -= PLAYER_VEL # Moves avatar left with left arrow key press
 
         elif keys[pygame.K_RIGHT] and player.x + PLAYER_VEL  +player.width <= WIDTH:
-            player.x += PLAYER_VEL   
+            player.x += PLAYER_VEL # Moves avatar right with right arrow key press 
 
         for fire in fires[:]:
             fire.y += FIRE_VEL
@@ -89,11 +94,12 @@ def main():
                 fires.remove(fire)
             elif fire.y + fire.height >= player.y and fire.colliderect(player):
                 fires.remove(fire)  
-                hit = True
+                hit = True # End game if avatar is hit by a flame
                 break
 
         if hit:
-            lost_text = FONT.render('You lost :(', 1, 'white')
+            # Display 'You Lose' text and end game after 4000 milliseconds
+            lost_text = FONT.render('You lost :(', 1, 'white') 
             WIN.blit(lost_text, (WIDTH/2 - lost_text.get_width()/2, HEIGHT/2 - lost_text.get_height()/2))
             pygame.display.update()
             pygame.time.delay(4000)

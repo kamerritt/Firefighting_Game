@@ -12,25 +12,29 @@ WIDTH, HEIGHT = 1000, 800
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Kyle Saves The Day!')
 
-# Load and scale background
+# Load and scale background, avatar, and fire images
 BG = pygame.transform.scale(pygame.image.load('game_images/game_background.jpg'), (WIDTH, HEIGHT))
-#BG = pygame.transform.scale(BG, (WIDTH, HEIGHT))
-
-# Set player velocity; load and scale avatar image
-PLAYER_WIDTH = 100
-PLAYER_HEIGHT = 100
-PLAYER_VEL = 5
-PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/firefighter_transparent.png').convert_alpha(), (PLAYER_WIDTH, PLAYER_HEIGHT))
-#PLAYER_IMAGE = pygame.transform.scale(PLAYER_IMAGE, (PLAYER_WIDTH, PLAYER_HEIGHT))
-
-# Set fire spawn rate; load and scale fire image
-FIRE_WIDTH = 30
-FIRE_HEIGHT = 45
-FIRE_VEL = 3
+PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/firefighter_transparent.png').convert_alpha(), (100, 100))
 FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/flame_transparent.png').convert_alpha(), (FIRE_WIDTH, FIRE_HEIGHT))
-#FIRE_IMAGE = pygame.transform.scale(FIRE_IMAGE, (FIRE_WIDTH, FIRE_HEIGHT))
 
 FONT = pygame.font.SysFont('comicsans', 30) # Set font type
+
+class Player: 
+    def __init__(self):
+        self.rect = PLAYER_IMAGE.get_rect()
+        self.rect.x = 200
+        self.rect.bottom = HEIGHT
+        self.vel = 5
+    
+    def move(self, keys):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] and self.rect.x - self.vel >= 0:
+            self.rect.x -= self.vel # Moves avatar left with left arrow key press
+
+        elif keys[pygame.K_RIGHT] and self.rect.x + self.vel + self.rect.width <= WIDTH:
+            self.rect.x += self.vel # Moves avatar right with right arrow key press 
+
+        
 
 # Function to draw items on gameplay screen 
 def draw(player, time_elapsed, fires):

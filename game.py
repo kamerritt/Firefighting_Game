@@ -13,9 +13,12 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Kyle Saves The Day!')
 
 # Load and scale background, avatar, and fire images
-BG = pygame.transform.scale(pygame.image.load('game_images/game_background.jpg'), (WIDTH, HEIGHT))
-PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/firefighter_transparent.png').convert_alpha(), (100, 100))
-FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/flame_transparent.png').convert_alpha(), (30, 45))
+BG = pygame.transform.scale(pygame.image.load('game_images/game_background.jpg')
+                            , (WIDTH, HEIGHT))
+PLAYER_IMAGE = pygame.transform.scale(pygame.image.load('game_images/' \
+'firefighter_transparent.png').convert_alpha(), (100, 100))
+FIRE_IMAGE = pygame.transform.scale(pygame.image.load('game_images/' \
+'flame_transparent.png').convert_alpha(), (30, 45))
 
 FONT = pygame.font.SysFont('comicsans', 30) # Set font type
 
@@ -29,24 +32,27 @@ class Game:
 
 class Avatar(Game): 
     def __init__(self):
-        super().__init__(PLAYER_IMAGE, 200, HEIGHT-100, 100, 100) # Inherit self parameters from Game parent class
+        # Inherit self parameters from Game parent class
+        super().__init__(PLAYER_IMAGE, 200, HEIGHT-100, 100, 100) 
         self.vel = 5 # Set avatar velocity
     
     def move(self, keys):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.rect.x - self.vel >= 0:
-            self.rect.x -= self.vel # Move avatar left with left arrow key press
+            self.rect.x -= self.vel # Move avatar left
 
-        elif keys[pygame.K_RIGHT] and self.rect.x + self.vel + self.rect.width <= WIDTH:
-            self.rect.x += self.vel # Move avatar right with right arrow key press
+        elif keys[pygame.K_RIGHT] and (self.rect.x + self.vel + 
+                                       self.rect.width <= WIDTH):
+            self.rect.x += self.vel # Move avatar right
 
     def draw(self, WIN):
-        WIN.blit(PLAYER_IMAGE, (self.rect.x, self.rect.y)) # Draw player on screen
+        WIN.blit(PLAYER_IMAGE, (self.rect.x, self.rect.y)) # Draw player
 
 class Fire(Game):
     def __init__(self):
-        x = random.randint(0, WIDTH-30) # Spawn fire at random location on screen
-        super().__init__(FIRE_IMAGE, x, -45, 30, 45) # Inherit self parameters from Game parent class
+        x = random.randint(0, WIDTH-30) # Spawn fire at random location
+        # Inherit self parameters from Game parent class
+        super().__init__(FIRE_IMAGE, x, -45, 30, 45) 
         self.vel = 3 # Set fire velocity
 
     def move(self):
@@ -56,7 +62,7 @@ class Fire(Game):
         return self.rect.y > HEIGHT # Fire moves off screen 
     
     def hit(self, avatar):
-        return self.rect.colliderect(avatar.rect) # Handle collison of avatar with fire
+        return self.rect.colliderect(avatar.rect) # Handle fire/avatar collision
     
 class Play:
     def __init__(self):
@@ -84,11 +90,11 @@ class Play:
             fire.move()
 
             if fire.off_screen():
-                self.fires.remove(fire) # Remove fire from gameplay if off screen
+                self.fires.remove(fire) # Remove fire if off screen
             
             elif fire.hit(self.avatar):
                 self.fires.remove(fire)
-                self.hit = True # Change condition to reflect that the avatar has been hit
+                self.hit = True # Change condition after avatar is hit
     
     # Draw objects on gameplay screen
     def draw(self):
@@ -107,9 +113,10 @@ class Play:
 
     
     def end_game(self):
-        # If avatar hits fire, game ends after 4 seconds of "You Lost" text is displayed
+        # If avatar is hit, game ends after 4 seconds of losing text
         lost_text = FONT.render('You Lost :(', 1, 'white')
-        WIN.blit(lost_text, (WIDTH/2 - lost_text.get_width()/2, HEIGHT/2 - lost_text.get_height()/2))
+        WIN.blit(lost_text, (WIDTH/2 - lost_text.get_width()/2, 
+                             HEIGHT/2 - lost_text.get_height()/2))
 
         pygame.display.update()
         pygame.time.delay(4000)
@@ -117,7 +124,7 @@ class Play:
     # Main function to run game
     def main(self):
         while self.run:
-            self.fire_count += self.clock.tick(60) # Increase fire count every second of gameplay
+            self.fire_count += self.clock.tick(60) # Increase fire count
 
             # Spawn fires on screen until game ends
             if self.fire_count > self.fire_add_increment:

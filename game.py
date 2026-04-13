@@ -21,7 +21,7 @@ PLAYER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 FIRE_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 'flame_transparent.png').convert_alpha(), (30, 45))
 WATER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
-'water_transparent.png').convert_alpha(), (20, 35))
+'water_transparent.png').convert_alpha(), (25, 40))
 
 FONT = pygame.font.SysFont('comicsans', 50) # Set font type
 
@@ -42,7 +42,7 @@ class Avatar(Game):
         self.image = self.original_image
         # Inherit self parameters from Game parent class
         super().__init__(self.image, 200, HEIGHT-100, 100, 100) 
-        self.vel = 5 # Set avatar velocity
+        self.vel = 7 # Set avatar velocity
     
     def move(self, keys):
         keys = pygame.key.get_pressed()
@@ -123,11 +123,11 @@ class Play:
             for row in reader:
                 x = int(row['x'].strip())
                 y = int(row['y'].strip())
-                self.window_locs.append((x, y))
+                self.window_locs.append((x, y)) 
         
     def spawn_fires(self):
         self.spawned_once = True
-        for i in range(3):
+        for i in range(3): # Spawn 3 fires at a time
             x, y = random.choice(self.window_locs)
             self.fires.append(Fire(x, y)) # Add fire to window
         
@@ -140,6 +140,7 @@ class Play:
                 self.fires.remove(fire)
                 self.hit = True # Change condition after avatar is hit
 
+    # Allow user to shoot water at fires with space key and remove fires if hit
     def shoot_water(self):
         for water in self.waters[:]:
             water.move()

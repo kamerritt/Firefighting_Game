@@ -23,36 +23,6 @@ FIRE_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 
 FONT = pygame.font.SysFont('comicsans', 50) # Set font type
 
-def menu():
-    clock = pygame.time.Clock()
-    while True:
-        WIN.fill((0, 0, 0))
-
-        title = FONT.render('Choose Difficulty', True, (255, 255, 255))
-        easy = FONT.render('Press 1 - Easy', True, (0, 255, 0))
-        medium = FONT.render('Press 2 - Medium', (255, 255, 0))
-        hard = FONT.render ('Press 3 - Hard', (255, 0, 0))
-
-        WIN.blit(title, (WIDTH//2 - title.get_width()//2, 200))
-        WIN.blit(easy, (WIDTH//2 - easy.get_width()//2, 320))
-        WIN.blit(medium, (WIDTH//2 - medium.get_width()//2, 380))
-        WIN.blit(hard, (WIDTH//2 - hard.get_width()//2, 440))
-
-        pygame.display.update()
-        clock.tick(60)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return None
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    return 'easy'
-                if event.key == pygame.K_2:
-                    return 'medium'
-                if event.key == pygame.K_3:
-                    return 'hard'
-
 class Game:
     def __init__(self, image, x, y, width, height):
         self.image = image
@@ -99,14 +69,14 @@ class Fire(Game):
         return avatar.mask.overlap(self.mask, dist) is not None
     
 class Play:
-    def __init__(self):
+    def __init__(self, spawn_time):
         self.avatar = Avatar()
         self.fires = [] # Start off with zero fires
 
         self.clock = pygame.time.Clock() # Gameplay clock
         self.starttime = time.time()
 
-        self.fire_add_increment = 2000 # Add fire every 2 seconds
+        self.fire_add_increment = spawn_time # Add fire depending on difficulty
         self.fire_count = 0
 
         self.run = True
@@ -198,7 +168,53 @@ class Play:
         #print(self.window_locs)
         pygame.quit()
 
+# Menu to select difficulty 
+def menu():
+    clock = pygame.time.Clock()
+    while True:
+        WIN.fill((0, 0, 0))
+
+        title = FONT.render('Choose Difficulty', True, (255, 255, 255))
+        easy = FONT.render('Press 1 - Easy', True, (0, 255, 0))
+        medium = FONT.render('Press 2 - Medium', True, (255, 255, 0))
+        hard = FONT.render ('Press 3 - Hard', True, (255, 0, 0))
+
+        WIN.blit(title, (WIDTH//2 - title.get_width()//2, 200))
+        WIN.blit(easy, (WIDTH//2 - easy.get_width()//2, 320))
+        WIN.blit(medium, (WIDTH//2 - medium.get_width()//2, 380))
+        WIN.blit(hard, (WIDTH//2 - hard.get_width()//2, 440))
+
+        pygame.display.update()
+        clock.tick(60)
+
+        # User presses 1 on keyboard for easy, 2 for medium, or 3 for hard
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return None
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    return 'easy'
+                if event.key == pygame.K_2:
+                    return 'medium'
+                if event.key == pygame.K_3:
+                    return 'hard'
+                
+def spawn_rate(difficulty):
+    if difficulty == 'easy':
+        return 3000
+    elif difficulty == 'medium':
+        return 2000
+    elif difficulty == 'hard':
+        return 1000
+
 # Run game!
 if __name__ == "__main__":
-    play = Play()
+    difficulty = menu()
+    if difficulty is None:
+        pygame.quit()
+        quit()
+    
+    spawn_time = spawn_rate(difficulty)
+    play = Play(spawn_time)
     play.main()

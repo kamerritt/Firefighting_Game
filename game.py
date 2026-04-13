@@ -20,6 +20,8 @@ PLAYER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 'firefighter_transparent.png').convert_alpha(), (100, 100))
 FIRE_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 'flame_transparent.png').convert_alpha(), (30, 45))
+WATER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
+'water_transparent.png').convert_alpha(), (20, 35))
 
 FONT = pygame.font.SysFont('comicsans', 50) # Set font type
 
@@ -68,10 +70,26 @@ class Fire(Game):
         dist = (self.rect.x - avatar.rect.x, self.rect.y - avatar.rect.y)
         return avatar.mask.overlap(self.mask, dist) is not None
     
+class Water(Game):
+    # Inherit self parameters from parent class
+    def __init__(self, x, y):
+        super().__init__(WATER_IMAGE, x, y, 10, 20)
+    
+    def move(self):
+        self.rect.y += self.vel
+
+    def off_screen(self):
+        return self.rect.y < 0
+
+    def hit(self, fire): return self.rect.colliderect(fire.rect)
+    
 class Play:
     def __init__(self, spawn_time):
         self.avatar = Avatar()
         self.fires = [] # Start off with zero fires
+
+        self.waters = []
+        self.won = False
 
         self.clock = pygame.time.Clock() # Gameplay clock
         self.starttime = time.time()
@@ -81,6 +99,7 @@ class Play:
 
         self.run = True
         self.hit = False
+
 
         self.window_locs = []
 
@@ -145,12 +164,12 @@ class Play:
                 if event.type == pygame.QUIT:
                     self.run = False
             
-            #if event.type == pygame.MOUSEBUTTONDOWN:
-            #    loc = pygame.mouse.get_pos()
-
-            #    if loc not in self.window_locs:
-            #        self.window_locs.append(loc)
-
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        water = Water(self.avatar.rect.centerx, 
+                                      self.avatar.rect.top)
+                        self.waters.append(water)
+                        
 
             # Allow avatar movement with key press
             keys = pygame.key.get_pressed()

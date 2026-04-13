@@ -162,7 +162,9 @@ class Play:
             if self.hit:
                 self.end_game()
                 break
-                
+            
+            if len(self.fires) > 20:
+                self.hit = True
             self.draw() # Draw all components until game ends
 
         #print(self.window_locs)

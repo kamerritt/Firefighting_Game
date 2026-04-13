@@ -52,15 +52,6 @@ class Avatar(Game):
 
 class Fire(Game):
     def __init__(self):
-        self.window_locs = []
-
-        # Create a list of window locations for fire spawning
-        with open('windows.csv', newline='') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                x = int(row['x'])
-                y = int(row['y'])
-                self.window_locs.append((x, y))
 
         x = random.randint(0, WIDTH-30) # Spawn fire at random location
         # Inherit self parameters from Game parent class
@@ -88,10 +79,19 @@ class Play:
 
         self.fire_add_increment = 2000 # Add fire every 2 seconds
         self.fire_count = 0
-        self.window_locs = [] # Empty list of building locations for fire spawn
 
         self.run = True
         self.hit = False
+
+        self.window_locs = []
+
+        # Create a list of window locations for fire spawning
+        with open('windows.csv', newline='') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                x = int(row['x'])
+                y = int(row['y'])
+                self.window_locs.append((x, y))
         
     def spawn_fires(self):
         for i in range(3):

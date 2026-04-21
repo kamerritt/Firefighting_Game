@@ -15,7 +15,7 @@ conda env create -f environment.yml
 conda activate ff_game_env
 ```
 
-### Current Version Information
+### Current Version Information (v1.0.0)
 
 The Firefighting Game only requires one script, `game.py`, that:
 

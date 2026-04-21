@@ -3,7 +3,7 @@ This simple video game was adapted from a Tech With Tim tutorial (https://www.yo
 
 ### Class Requirements
 
-For the final project, I have implemented classes to fulfill Task #1. I then incorporated user input (difficulty level selection) and utilized branching development to fulfill Task #2. 
+For the final project, I have implemented classes to fulfill Task #1. I then incorporated user input (difficulty level selection) and utilized branching development (new-gameplay branch) to fulfill Task #2. 
 
 ### Installation
 *Install instructions for game conda environment.*

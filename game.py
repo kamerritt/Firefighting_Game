@@ -21,7 +21,7 @@ PLAYER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 FIRE_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
 'flame_transparent.png').convert_alpha(), (30, 45))
 WATER_IMAGE = pygame.transform.smoothscale(pygame.image.load('game_images/' \
-'water_transparent.png').convert_alpha(), (25, 40))
+'water_transparent.png').convert_alpha(), (30, 45))
 
 FONT = pygame.font.SysFont('comicsans', 50) # Set font type
 

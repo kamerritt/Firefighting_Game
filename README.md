@@ -6,7 +6,6 @@ This simple video game was adapted from a Tech With Tim tutorial (https://www.yo
 For the final project, I have implemented classes to fulfill Task #1. I then incorporated user input (difficulty level selection) and utilized branching development (new-gameplay branch) to fulfill Task #2. 
 
 ### Installation
-*Install instructions for game conda environment.*
 The use of conda (or mamba) is recommended to create a new environment using the provided `environment.yml` file:
 ```
 git clone https://github.com/kamerritt/GEOS694_Final_Project_Game.git

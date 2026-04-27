@@ -5,7 +5,7 @@ This simple video game was adapted from a Tech With Tim tutorial (https://www.yo
 
 For the final project, I have implemented classes to fulfill Task #1. I then incorporated user input (difficulty level selection) and utilized branching development (new-gameplay branch) to fulfill Task #2. 
 
-### Installation
+### Installation and Gameplay
 The use of conda (or mamba) is recommended to create a new environment using the provided `environment.yml` file:
 ```
 git clone https://github.com/kamerritt/GEOS694_Final_Project_Game.git
@@ -15,7 +15,8 @@ conda activate ff_game
 ```
 
 The game can be initiated with the following commands:
-```                                                                             cd GEOS694_Final_Project_Game                                             
+```                                                                            
+cd GEOS694_Final_Project_Game                                      
 conda activate ff_game
 python game.py                                                          
 ``` 
@@ -24,9 +25,10 @@ python game.py
 
 The Firefighting Game only requires one script, `game.py`, that:
 
+- Presents the user with the menu screen to select the preffered difficulty level
 - Initializes the gameplay screen with the background `game_background.jpg`
 - Provides the user an avatar `firefighter_transparent.jpg`
-- Allows the user to move left and right and shoot water (space bar) (`water_transparent.png`) to put out fires (`flame_transparent.png`)
+- Allows the user to move left and right using the arrow keys and shoot water (`water_transparent.png`) using the space bar to put out fires (`flame_transparent.png`)
 - Ends the game if a flame hits the avatar, or if all fires are extinguished
 
 ### Dependencies

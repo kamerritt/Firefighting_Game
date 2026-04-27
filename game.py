@@ -94,7 +94,7 @@ class Fire(Game):
         self.vel = 0 # Set fire velocity
 
     def move(self):
-        self.rect.y += self.vel # Fire moves down screen according to velocity
+        self.rect.y += self.vel # Control fire movement (stationary)
     
     def off_screen(self):
         return self.rect.y > HEIGHT # Fire moves off screen 
@@ -116,7 +116,8 @@ class Water(Game):
     def off_screen(self):
         return self.rect.y < 0
 
-    def hit(self, fire): return self.rect.colliderect(fire.rect)
+    def hit(self, fire): 
+        return self.rect.colliderect(fire.rect)
     
 class Play:
     def __init__(self, spawn_time):
@@ -252,7 +253,6 @@ class Play:
 
             self.draw() # Draw all components until game ends
 
-        #print(self.window_locs)
         pygame.quit()
 
 # If all fires are put out, the user wins the game!
@@ -302,9 +302,9 @@ def spawn_rate(difficulty):
     if difficulty == 'easy':
         return 3000
     elif difficulty == 'medium':
-        return 2000
+        return 2500
     elif difficulty == 'hard':
-        return 1000
+        return 2000
 
 # Run game!
 if __name__ == "__main__":

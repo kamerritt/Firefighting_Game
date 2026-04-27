@@ -151,8 +151,14 @@ class Play:
         
     def spawn_fires(self):
         self.spawned_once = True
-        for i in range(3): # Spawn 3 fires at a time
-            x, y = random.choice(self.window_locs)
+        occupied = {(fire.rect.centerx, fire.rect.centery) for 
+                    fire in self.fires}
+        available_locs = [loc for loc in self.window_locs if 
+                          loc not in occupied]
+
+        # Spawn up to 3 fires, but not more than available locations
+        num_to_spawn = min(3, len(available_locs)) 
+        for x, y in random.sample(available_locs, num_to_spawn): 
             self.fires.append(Fire(x, y)) # Add fire to window
         
         self.fire_add_increment = max(200, self.fire_add_increment-50)

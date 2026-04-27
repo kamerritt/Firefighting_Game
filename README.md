@@ -14,6 +14,12 @@ conda env create -f environment.yml
 conda activate ff_game
 ```
 
+The game can be initiated with the following commands:
+```                                                                             cd GEOS694_Final_Project_Game                                             
+conda activate ff_game
+python game.py                                                          
+``` 
+
 ### Current Version Information (v1.0.0)
 
 The Firefighting Game only requires one script, `game.py`, that:
@@ -23,11 +29,6 @@ The Firefighting Game only requires one script, `game.py`, that:
 - Allows the user to move left and right and shoot water (space bar) (`water_transparent.png`) to put out fires (`flame_transparent.png`)
 - Ends the game if a flame hits the avatar, or if all fires are extinguished
 
-The game can be initiated with the following commands:
-```                                                                             cd GEOS694_Final_Project_Game                                             
-conda activate ff_game
-python game.py                                                          
-``` 
 ### Dependencies
 
 This video game uses the following packages:
